@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Dispositivo 1 - Consulta / Preventa</h1>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card mb-4">
+      <div class="card-header">Buscar producto</div>
+      <div class="card-body">
+        <input class="form-control" name="q" placeholder="Nombre, marca o modelo"
+          hx-get="{{ url_for('search_products') }}"
+          hx-trigger="keyup changed delay:400ms"
+          hx-target="#product-results"
+          hx-swap="innerHTML">
+        <div id="product-results" class="mt-3">
+          <div class="alert alert-secondary">Escribe para buscar stock disponible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card mb-4">
+      <div class="card-header">Cliente y preventa</div>
+      <div class="card-body">
+        <form method="post" action="{{ url_for('send_presale') }}">
+          <div class="mb-3">
+            <label class="form-label">Cédula del cliente</label>
+            <input type="text" class="form-control" name="cedula" id="cedula" required
+              hx-get="{{ url_for('lookup_client') }}"
+              hx-trigger="keyup changed delay:400ms"
+              hx-target="#client-result"
+              hx-swap="innerHTML">
+          </div>
+          <div id="client-result">
+            <div class="alert alert-light">Busca la cédula del cliente para verificar su registro.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Producto seleccionado</label>
+            <input type="number" class="form-control" name="product_id" id="product_id" required placeholder="Seleccione un producto del listado">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cantidad</label>
+            <input type="number" class="form-control" name="quantity" value="1" min="1" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Origen</label>
+            <input type="text" class="form-control" name="device_source" value="Dispositivo 1" readonly>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar a Caja</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

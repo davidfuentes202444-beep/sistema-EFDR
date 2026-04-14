@@ -1,0 +1,18 @@
+{% if products %}
+  <div class="list-group">
+    {% for product in products %}
+      <div class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ product.name }}</strong>
+            <div class="small text-muted">{{ product.brand or 'Marca no registrada' }} · {{ product.model or 'Modelo no registrado' }}</div>
+            <div class="small">Precio: ${{ '%.2f' % product.price_usd }} · Stock: {{ product.stock }}</div>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="document.getElementById('product_id').value={{ product.id }};">Seleccionar</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-warning">No se encontraron productos.</div>
+{% endif %}

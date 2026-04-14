@@ -1,0 +1,14 @@
+{% if client %}
+  <div class="alert alert-success">
+    <strong>Cliente encontrado</strong><br>
+    {{ client.name }}<br>
+    Cédula: {{ client.cedula }}<br>
+    Dirección: {{ client.address or '-' }}<br>
+    Teléfono: {{ client.phone or '-' }}<br>
+    Correo: {{ client.email or '-' }}
+  </div>
+{% else %}
+  <div class="alert alert-danger">
+    Cliente no registrado. La Caja recibirá alerta y podrá completar el registro.
+  </div>
+{% endif %}

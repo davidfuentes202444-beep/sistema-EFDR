@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-secondary text-white">Acceso de usuario</div>
+      <div class="card-body">
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select class="form-select" name="role">
+              <option value="vendedor" {% if role == 'vendedor' %}selected{% endif %}>Dispositivo 1 - Vendedor</option>
+              <option value="caja" {% if role == 'caja' %}selected{% endif %}>Dispositivo 2 - Caja</option>
+              <option value="admin" {% if role == 'admin' %}selected{% endif %}>Dispositivo 3 - Admin</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-control" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

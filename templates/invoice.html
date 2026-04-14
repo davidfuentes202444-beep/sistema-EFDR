@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Factura finalizada</h1>
+<div class="card mb-4">
+  <div class="card-header">Factura #{{ sale.id }}</div>
+  <div class="card-body">
+    <div id="invoice-ticket" class="ticket border rounded p-3 bg-white">
+      <div class="text-center mb-3">
+        <strong>POS Venezuela</strong><br>
+        <small>Factura térmica simplificada</small>
+      </div>
+      <div>Fecha: {{ sale.paid_at.strftime('%Y-%m-%d %H:%M:%S') if sale.paid_at else sale.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+      <div>Cliente: {{ sale.client_name or 'No registrado' }}</div>
+      <div>Cédula: {{ sale.client_cedula }}</div>
+      <hr>
+      <div>Producto: {{ sale.product.name }}</div>
+      <div>Marca / Modelo: {{ sale.product.brand or '-' }} / {{ sale.product.model or '-' }}</div>
+      <div>Cantidad: {{ sale.quantity }}</div>
+      <div>Precio USD: ${{ '%.2f' % sale.price_usd }}</div>
+      <div>Tasa del día: {{ '%.2f' % tasa }} Bs/$</div>
+      <div>Total Bs: {{ '%.2f' % sale.total_bs }}</div>
+      <div>Método: {{ sale.payment_method or 'N/A' }}</div>
+      <hr>
+      <div class="text-center">Gracias por su compra</div>
+    </div>
+    <div class="mt-3">
+      <button class="btn btn-primary" onclick="printTicket()">Imprimir ticket</button>
+      <a href="{{ url_for('device2') }}" class="btn btn-secondary">Volver a Caja</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

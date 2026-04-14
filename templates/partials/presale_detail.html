@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-header">Venta pendiente #{{ sale.id }}</div>
+  <div class="card-body">
+    <p><strong>Cliente:</strong> {{ sale.client_cedula }} {% if sale.client_name %} · {{ sale.client_name }}{% endif %}</p>
+    <p><strong>Producto:</strong> {{ sale.product.name }} · {{ sale.product.brand or 'Marca' }} · {{ sale.product.model or 'Modelo' }}</p>
+    <p><strong>Cantidad:</strong> {{ sale.quantity }} · <strong>Precio:</strong> ${{ '%.2f' % sale.price_usd }}</p>
+    <p><strong>Total en BS (aprox.):</strong> Bs. {{ '%.2f' % (sale.price_usd * tasa_hoy) }}</p>
+    <p><strong>Empleado:</strong> {{ sale.employee or 'No especificado' }}</p>
+    <p><strong>Stock disponible:</strong> {{ sale.product.stock }}</p>
+    <form method="post" action="{{ url_for('process_sale', sale_id=sale.id) }}">
+      <div class="mb-3">
+        <label class="form-label">Método de pago</label>
+        <select class="form-select" name="payment_method" required>
+          <option value="">Seleccionar</option>
+          <option>Divisa</option>
+          <option>Efectivo</option>
+          <option>Punto de Venta</option>
+          <option>Pago Móvil</option>
+        </select>
+      </div>
+      {% if not sale.client_id %}
+        <div class="alert alert-warning">Cliente no registrado. Complete el registro para procesar la venta.</div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" type="text" name="client_name" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Teléfono</label>
+            <input class="form-control" type="text" name="client_phone">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Dirección</label>
+          <input class="form-control" type="text" name="client_address" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Correo</label>
+          <input class="form-control" type="email" name="client_email">
+        </div>
+      {% endif %}
+      <button type="submit" class="btn btn-success">Procesar venta</button>
+    </form>
+  </div>
+</div>

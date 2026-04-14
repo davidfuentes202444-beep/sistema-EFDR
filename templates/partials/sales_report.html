@@ -1,0 +1,36 @@
+{% if sales %}
+  <div class="table-responsive">
+    <table class="table table-sm align-middle">
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Nombre</th>
+          <th>Cédula</th>
+          <th>Producto</th>
+          <th>Marca</th>
+          <th>Cantidad</th>
+          <th>Empleado</th>
+          <th>Método</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sale in sales %}
+          <tr>
+            <td>{{ sale.created_at.strftime('%H:%M:%S') }}</td>
+            <td>{{ sale.client_name or 'Cliente nuevo' }}</td>
+            <td>{{ sale.client_cedula }}</td>
+            <td>{{ sale.product.name }}</td>
+            <td>{{ sale.product.brand or sale.product.model or '-' }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>{{ sale.employee or '-' }}</td>
+            <td>{{ sale.payment_method or 'Pendiente' }}</td>
+            <td>{{ sale.status.capitalize() }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="alert alert-secondary">No hay ventas registradas para hoy.</div>
+{% endif %}
